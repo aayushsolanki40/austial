@@ -1,6 +1,25 @@
-# Austial
+<p align="center">
+  <img src="assets/icon.svg" alt="Austial icon" width="96">
+</p>
 
-**A NestJS-style, batteries-included web framework for Python, built on top of FastAPI.**
+<p align="center">
+  <img src="assets/logo.svg" alt="Austial" width="420">
+</p>
+
+<p align="center">
+  <b>A NestJS-style, batteries-included web framework for Python, built on top of FastAPI.</b>
+</p>
+
+<p align="center">
+  <a href="https://github.com/aayushsolanki40/austial/tags"><img src="https://img.shields.io/github/v/tag/aayushsolanki40/austial?label=version&sort=semver" alt="Latest tag"></a>
+  <a href="https://github.com/aayushsolanki40/austial/commits/main"><img src="https://img.shields.io/github/last-commit/aayushsolanki40/austial" alt="Last commit"></a>
+  <a href="https://github.com/aayushsolanki40/austial/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License"></a>
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.11%2B-blue" alt="Python 3.11+"></a>
+  <a href="https://fastapi.tiangolo.com/"><img src="https://img.shields.io/badge/built%20with-FastAPI-009688?logo=fastapi&logoColor=white" alt="Built with FastAPI"></a>
+  <a href="https://github.com/astral-sh/uv"><img src="https://img.shields.io/badge/managed%20with-uv-DE5FE9" alt="Managed with uv"></a>
+</p>
+
+# Austial
 
 Austial gives Python the exact developer experience of [NestJS](https://nestjs.com/):
 decorator-driven modules/controllers/providers, real constructor-based
@@ -134,6 +153,8 @@ hand-written, it's proof the generator works.
 ```
 api.austial.com/
 ├── pyproject.toml          # package "austial", console-script entry point
+├── LICENSE                  # MIT
+├── assets/                   # logo.svg / icon.svg / apple-icon.png (used in this README)
 ├── austial/                 # the framework (installable library)
 │   ├── common/               # decorators, guards, interceptors, pipes, filters,
 │   │                         # middleware, exceptions, logger
@@ -188,4 +209,4 @@ under the hood), so route strings read exactly like their Nest counterparts.
 
 ## License
 
-MIT
+[MIT](./LICENSE)
