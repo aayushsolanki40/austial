@@ -6,7 +6,7 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/logo.svg">
-    <img src="assets/logo.svg" alt="Austial" width="220">
+    <img src="assets/logo.svg" alt="Austial" width="380">
   </picture>
 </p>
 
