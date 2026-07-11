@@ -6,12 +6,14 @@ caching). Supports Nest's three "custom provider" shapes as plain dicts:
 ``{"provide": TOKEN, "useValue": ...}``, ``{"provide": TOKEN, "useClass": ...}``,
 ``{"provide": TOKEN, "useFactory": fn, "inject": [...]}``.
 """
+
 from __future__ import annotations
 
 import inspect
 import typing
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
-from typing import Any, Callable, Optional, Sequence
+from typing import Any
 
 from austial.common.decorators.injectable import InjectMarker, OptionalMarker
 from austial.common.enums import Scope
@@ -39,9 +41,9 @@ class CircularDependencyError(Exception):
 @dataclass
 class ProviderDefinition:
     token: Any
-    use_class: Optional[type] = None
+    use_class: type | None = None
     use_value: Any = _UNSET
-    use_factory: Optional[Callable] = None
+    use_factory: Callable | None = None
     inject: Sequence[Any] = field(default_factory=list)
     scope: Scope = Scope.DEFAULT
 
@@ -122,7 +124,7 @@ class Container:
         return definition.use_class(**kwargs)
 
     def _resolve_constructor_args(self, cls: type, resolving: frozenset) -> dict:
-        init = cls.__init__
+        init = cls.__init__  # type: ignore[misc]  # deliberately dynamic: `cls` is any registered provider class
         if init is object.__init__:
             return {}
         try:

@@ -1,8 +1,10 @@
 """``@Module()`` -- mirrors ``@nestjs/common``'s ``@Module()`` decorator."""
+
 from __future__ import annotations
 
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
-from typing import Any, Callable, List, Sequence, TypeVar
+from typing import Any, TypeVar
 
 from austial.core.metadata import MODULE_METADATA, set_metadata
 
@@ -11,10 +13,10 @@ T = TypeVar("T")
 
 @dataclass
 class ModuleMetadata:
-    imports: List[Any] = field(default_factory=list)
-    controllers: List[type] = field(default_factory=list)
-    providers: List[Any] = field(default_factory=list)
-    exports: List[Any] = field(default_factory=list)
+    imports: list[Any] = field(default_factory=list)
+    controllers: list[type] = field(default_factory=list)
+    providers: list[Any] = field(default_factory=list)
+    exports: list[Any] = field(default_factory=list)
     is_global: bool = False
 
 

@@ -1,9 +1,10 @@
 """``LoggingMiddleware`` -- the canonical Nest "log every request" example
 (nestjs.com/docs/middleware uses the exact same one, just in TypeScript)."""
+
 from __future__ import annotations
 
 import time
-from typing import Awaitable, Callable
+from collections.abc import Awaitable, Callable
 
 from starlette.requests import Request
 from starlette.responses import Response

@@ -5,13 +5,14 @@ All of these carry a ``status_code`` and a Nest-shaped ``response`` payload
 :class:`~austial.common.filters.all_exceptions_filter.AllExceptionsFilter`
 can render them exactly like Nest's built-in filter does.
 """
+
 from __future__ import annotations
 
-from typing import Any, Optional, Union
+from typing import Any
 
 
 class HttpException(Exception):
-    def __init__(self, message: Union[str, dict, None] = None, status_code: int = 500, error: Optional[str] = None):
+    def __init__(self, message: str | dict | None = None, status_code: int = 500, error: str | None = None):
         self.status_code = status_code
         if isinstance(message, dict):
             self.response: dict[str, Any] = {"statusCode": status_code, **message}
@@ -54,55 +55,55 @@ _REASON_PHRASES = {
 
 
 class BadRequestException(HttpException):
-    def __init__(self, message: Union[str, dict, None] = None):
+    def __init__(self, message: str | dict | None = None):
         super().__init__(message, 400)
 
 
 class UnauthorizedException(HttpException):
-    def __init__(self, message: Union[str, dict, None] = None):
+    def __init__(self, message: str | dict | None = None):
         super().__init__(message, 401)
 
 
 class ForbiddenException(HttpException):
-    def __init__(self, message: Union[str, dict, None] = None):
+    def __init__(self, message: str | dict | None = None):
         super().__init__(message, 403)
 
 
 class NotFoundException(HttpException):
-    def __init__(self, message: Union[str, dict, None] = None):
+    def __init__(self, message: str | dict | None = None):
         super().__init__(message, 404)
 
 
 class MethodNotAllowedException(HttpException):
-    def __init__(self, message: Union[str, dict, None] = None):
+    def __init__(self, message: str | dict | None = None):
         super().__init__(message, 405)
 
 
 class ConflictException(HttpException):
-    def __init__(self, message: Union[str, dict, None] = None):
+    def __init__(self, message: str | dict | None = None):
         super().__init__(message, 409)
 
 
 class UnprocessableEntityException(HttpException):
-    def __init__(self, message: Union[str, dict, None] = None):
+    def __init__(self, message: str | dict | None = None):
         super().__init__(message, 422)
 
 
 class TooManyRequestsException(HttpException):
-    def __init__(self, message: Union[str, dict, None] = None):
+    def __init__(self, message: str | dict | None = None):
         super().__init__(message, 429)
 
 
 class InternalServerErrorException(HttpException):
-    def __init__(self, message: Union[str, dict, None] = None):
+    def __init__(self, message: str | dict | None = None):
         super().__init__(message, 500)
 
 
 class NotImplementedException(HttpException):
-    def __init__(self, message: Union[str, dict, None] = None):
+    def __init__(self, message: str | dict | None = None):
         super().__init__(message, 501)
 
 
 class ServiceUnavailableException(HttpException):
-    def __init__(self, message: Union[str, dict, None] = None):
+    def __init__(self, message: str | dict | None = None):
         super().__init__(message, 503)

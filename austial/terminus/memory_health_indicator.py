@@ -1,4 +1,5 @@
 """``MemoryHealthIndicator`` -- mirrors ``@nestjs/terminus``'s ``MemoryHealthIndicator``."""
+
 from __future__ import annotations
 
 import resource

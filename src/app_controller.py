@@ -1,5 +1,4 @@
 from austial import Controller, Get
-
 from src.app_service import AppService
 
 

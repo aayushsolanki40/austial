@@ -1,5 +1,6 @@
 """Shared helpers for every generator: template rendering + project-root
 discovery, mirroring what the ``nest`` CLI's schematics engine does."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -46,7 +47,7 @@ class ProjectNotFoundError(Exception):
     pass
 
 
-def find_project_root(start: "Path | None" = None) -> Path:
+def find_project_root(start: Path | None = None) -> Path:
     """Walks upward from `start` (default: cwd) looking for `src/app_module.py`,
     the marker of an Austial project root."""
     current = (start or Path.cwd()).resolve()

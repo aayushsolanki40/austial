@@ -1,6 +1,7 @@
 """``austial generate resource <name>`` -- mirrors ``nest g resource``:
 scaffolds a full CRUD module (module + controller + service + dto + entity)
 in one shot and registers it into the nearest ``app_module.py``."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -10,7 +11,7 @@ from austial.cli.generators.base import find_project_root, render, write_file
 from austial.cli.naming import to_kebab_case, to_pascal_case, to_snake_case
 
 
-def generate_resource(name: str, *, project_root: "Path | None" = None) -> Path:
+def generate_resource(name: str, *, project_root: Path | None = None) -> Path:
     root = project_root or find_project_root()
     snake_name = to_snake_case(name)
     class_name = to_pascal_case(name)

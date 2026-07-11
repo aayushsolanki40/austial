@@ -6,10 +6,11 @@ out of them, wiring the full Nest-style request pipeline around each handler:
 This is the piece that makes ``@Controller``/``@Get``/``@UseGuards``/etc. do
 something, instead of just being inert metadata.
 """
+
 from __future__ import annotations
 
 import inspect
-from typing import Any, Callable, List, Optional
+from collections.abc import Callable
 
 from fastapi import APIRouter, Request, Response
 
@@ -46,10 +47,10 @@ class RouterBuilder:
         self,
         container: Container,
         *,
-        global_guards: Optional[list] = None,
-        global_pipes: Optional[list] = None,
-        global_interceptors: Optional[list] = None,
-        global_filters: Optional[list] = None,
+        global_guards: list | None = None,
+        global_pipes: list | None = None,
+        global_interceptors: list | None = None,
+        global_filters: list | None = None,
     ):
         self._container = container
         self._global_guards = global_guards or []
@@ -57,7 +58,7 @@ class RouterBuilder:
         self._global_interceptors = global_interceptors or []
         self._global_filters = global_filters or []
 
-    def build(self, controllers: List[type]) -> APIRouter:
+    def build(self, controllers: list[type]) -> APIRouter:
         root_router = APIRouter()
         for controller_cls in controllers:
             self._register_controller(root_router, controller_cls)
@@ -72,7 +73,7 @@ class RouterBuilder:
         for name, member in vars(controller_cls).items():
             if not callable(member):
                 continue
-            route_meta: Optional[RouteMetadata] = get_metadata(ROUTE_METADATA, member)
+            route_meta: RouteMetadata | None = get_metadata(ROUTE_METADATA, member)
             if route_meta is None:
                 continue
             bound_handler = getattr(instance, name)
@@ -82,7 +83,14 @@ class RouterBuilder:
 
         root_router.include_router(router)
 
-    def _resolve_chain(self, key: str, controller_cls: type, handler: Callable, globals_list: list, default: Optional[list] = None) -> list:
+    def _resolve_chain(
+        self,
+        key: str,
+        controller_cls: type,
+        handler: Callable,
+        globals_list: list,
+        default: list | None = None,
+    ) -> list:
         raw = list(globals_list)
         raw += get_metadata(key, controller_cls, [])
         raw += get_metadata(key, handler, [])
@@ -135,7 +143,9 @@ class RouterBuilder:
     ) -> Callable:
         original_sig = inspect.signature(handler)  # bound method -> `self` already excluded
         request_param = inspect.Parameter(_REQUEST_PARAM_NAME, kind=inspect.Parameter.KEYWORD_ONLY, annotation=Request)
-        response_param = inspect.Parameter(_RESPONSE_PARAM_NAME, kind=inspect.Parameter.KEYWORD_ONLY, annotation=Response)
+        response_param = inspect.Parameter(
+            _RESPONSE_PARAM_NAME, kind=inspect.Parameter.KEYWORD_ONLY, annotation=Response
+        )
         new_sig = original_sig.replace(parameters=[*original_sig.parameters.values(), request_param, response_param])
         is_coroutine = inspect.iscoroutinefunction(handler)
 
@@ -169,6 +179,6 @@ class RouterBuilder:
             except Exception as exc:  # noqa: BLE001 - dispatched to exception filters below
                 return await dispatch_exception(exc, request, filters)
 
-        endpoint.__signature__ = new_sig
+        endpoint.__signature__ = new_sig  # type: ignore[attr-defined]  # FastAPI reads this to build the OpenAPI schema
         endpoint.__name__ = getattr(handler, "__name__", "endpoint")
         return endpoint

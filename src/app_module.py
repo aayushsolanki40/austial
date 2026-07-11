@@ -1,12 +1,12 @@
 """Root application module -- mirrors Nest's ``src/app.module.ts``."""
+
 from austial import Module
 from austial.common.middleware import LoggingMiddleware, MiddlewareConsumer
 from austial.config import ConfigModule
-
 from src.app_controller import AppController
 from src.app_service import AppService
-from src.modules.health.health_module import HealthModule
 from src.modules.cats.cats_module import CatsModule
+from src.modules.health.health_module import HealthModule
 
 
 @Module(

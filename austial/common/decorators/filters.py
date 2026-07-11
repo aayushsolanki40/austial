@@ -1,7 +1,9 @@
 """``@UseFilters()`` / ``@Catch()`` -- mirrors ``@nestjs/common``."""
+
 from __future__ import annotations
 
-from typing import Any, Callable, Tuple, Type
+from collections.abc import Callable
+from typing import Any
 
 from austial.core.metadata import CATCH_METADATA, FILTERS_METADATA, get_metadata, set_metadata
 
@@ -18,7 +20,7 @@ def UseFilters(*filters: Any) -> Callable:
     return decorator
 
 
-def Catch(*exceptions: Type[BaseException]) -> Callable:
+def Catch(*exceptions: type[BaseException]) -> Callable:
     """Class decorator declaring which exception types a filter handles.
     An empty call (``@Catch()``) catches everything, mirroring Nest."""
 

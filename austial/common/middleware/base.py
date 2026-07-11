@@ -7,11 +7,13 @@ method (mirroring Nest's ``NestModule`` interface)::
         def configure(self, consumer: MiddlewareConsumer) -> None:
             consumer.apply(LoggingMiddleware).for_routes("*")
 """
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass
-from typing import Any, Awaitable, Callable, Sequence
+from typing import Any
 
 from starlette.requests import Request
 from starlette.responses import Response
@@ -38,11 +40,11 @@ class MiddlewareBinding:
 
 
 class _RouteBinder:
-    def __init__(self, consumer: "MiddlewareConsumer", middlewares: Sequence[Any]):
+    def __init__(self, consumer: MiddlewareConsumer, middlewares: Sequence[Any]):
         self._consumer = consumer
         self._middlewares = middlewares
 
-    def for_routes(self, *routes: str) -> "MiddlewareConsumer":
+    def for_routes(self, *routes: str) -> MiddlewareConsumer:
         self._consumer.bindings.append(MiddlewareBinding(middlewares=self._middlewares, routes=routes or ("*",)))
         return self._consumer
 

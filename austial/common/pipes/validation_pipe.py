@@ -7,11 +7,13 @@ Nest's "pipes transform/validate arguments right before the handler runs":
 each resolved argument is passed through ``transform()`` for every pipe in
 scope (global -> controller -> route), in order.
 """
+
 from __future__ import annotations
 
+import builtins
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, Literal, Optional
+from typing import Any, Literal
 
 from pydantic import BaseModel, ValidationError
 
@@ -20,9 +22,11 @@ from austial.common.exceptions.http_exceptions import BadRequestException
 
 @dataclass
 class ArgumentMetadata:
+    # Field name intentionally mirrors Nest's `ArgumentMetadata.type` -- annotate
+    # `metatype` via `builtins.type` to avoid this field shadowing the builtin.
     type: Literal["body", "query", "param", "custom"]
-    data: Optional[str]
-    metatype: Optional[type]
+    data: str | None
+    metatype: builtins.type | None
 
 
 class PipeTransform(ABC):

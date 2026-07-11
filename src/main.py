@@ -9,15 +9,15 @@ Note: building the app graph (module scanning + DI wiring) is synchronous --
 only ``app.listen()`` (actually starting the ASGI server) is async, mirroring
 where real async work happens in Nest too.
 """
+
 import asyncio
 
-from austial import AustialFactory, ValidationPipe
+from austial import AustialApplication, AustialFactory, ValidationPipe
 from austial.common.filters import AllExceptionsFilter
-
 from src.app_module import AppModule
 
 
-def _build() -> "AustialApplication":
+def _build() -> AustialApplication:
     app = AustialFactory.create(AppModule, title="Austial Sample App")
     app.use_global_pipes(ValidationPipe())
     app.use_global_filters(AllExceptionsFilter())

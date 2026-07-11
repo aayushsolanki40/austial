@@ -2,6 +2,7 @@
 every provider/controller into the DI :class:`~austial.core.container.Container`
 and collecting the flat list of controllers + modules for the router builder
 and the middleware system."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field

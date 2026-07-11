@@ -1,16 +1,16 @@
 """``austial`` -- the CLI, mirrors the ``nest`` command.
 
-    austial new my-app
-    austial generate module cats      (alias: austial g module cats)
-    austial generate controller cats
-    austial generate service cats
-    austial generate resource cats
-    austial serve
+austial new my-app
+austial generate module cats      (alias: austial g module cats)
+austial generate controller cats
+austial generate service cats
+austial generate resource cats
+austial serve
 """
+
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 import typer
 from rich.console import Console
@@ -43,10 +43,10 @@ _SCHEMATICS = {
 @app.command("new")
 def new_project(
     name: str = typer.Argument(..., help="Name of the new project/directory to create."),
-    directory: Optional[str] = typer.Option(None, "--directory", "-d", help="Target directory (defaults to ./<name>)."),
+    directory: str | None = typer.Option(None, "--directory", "-d", help="Target directory (defaults to ./<name>)."),
     skip_install: bool = typer.Option(False, "--skip-install", help="Don't run `uv sync` after scaffolding."),
     skip_git: bool = typer.Option(False, "--skip-git", help="Don't run `git init` after scaffolding."),
-    link: Optional[str] = typer.Option(
+    link: str | None = typer.Option(
         None,
         "--link",
         help="Path to a local Austial framework checkout to depend on via `uv`'s editable path sources "

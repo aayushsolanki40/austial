@@ -1,6 +1,8 @@
 from austial import Injectable
 from austial.terminus import HealthCheckService, MemoryHealthIndicator
 
+from src.modules.health.health_dto import HealthResponseDto
+
 
 @Injectable()
 class HealthService:
@@ -8,9 +10,10 @@ class HealthService:
         self.health_check_service = health_check_service
         self.memory = memory
 
-    async def check(self) -> dict:
-        return await self.health_check_service.check(
+    async def check(self) -> HealthResponseDto:
+        result = await self.health_check_service.check(
             [
                 lambda: self.memory.check_heap("memory_heap", 300 * 1024 * 1024),
             ]
         )
+        return HealthResponseDto(**result)

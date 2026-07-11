@@ -5,9 +5,10 @@ Renders errors in the exact shape Nest's built-in filter produces::
     {"statusCode": 404, "message": "Not Found", "error": "Not Found",
      "timestamp": "...", "path": "/cats/42"}
 """
+
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from starlette.responses import JSONResponse
 
@@ -25,6 +26,6 @@ class AllExceptionsFilter(ExceptionFilter):
             status_code = 500
             body = {"statusCode": 500, "message": "Internal Server Error", "error": "Internal Server Error"}
 
-        body.setdefault("timestamp", datetime.now(timezone.utc).isoformat())
+        body.setdefault("timestamp", datetime.now(UTC).isoformat())
         body.setdefault("path", request.url.path)
         return JSONResponse(status_code=status_code, content=body)

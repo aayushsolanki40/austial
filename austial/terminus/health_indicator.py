@@ -1,9 +1,10 @@
 """Base types for health indicators -- mirrors ``@nestjs/terminus``."""
+
 from __future__ import annotations
 
-from typing import Any, Dict, Optional
+from typing import Any
 
-HealthIndicatorResult = Dict[str, Dict[str, Any]]
+HealthIndicatorResult = dict[str, dict[str, Any]]
 
 
 class HealthCheckError(Exception):
@@ -20,8 +21,8 @@ class HealthIndicator:
     ``async def xxx_check(self, key: str, ...) -> HealthIndicatorResult``
     methods built on top of :meth:`get_status`."""
 
-    def get_status(self, key: str, is_healthy: bool, data: Optional[dict] = None) -> HealthIndicatorResult:
-        payload: Dict[str, Any] = {"status": "up" if is_healthy else "down"}
+    def get_status(self, key: str, is_healthy: bool, data: dict | None = None) -> HealthIndicatorResult:
+        payload: dict[str, Any] = {"status": "up" if is_healthy else "down"}
         if data:
             payload.update(data)
         return {key: payload}

@@ -1,11 +1,11 @@
 """``Logger`` -- mirrors ``@nestjs/common``'s ``Logger``, including the
 familiar colored ``[Austial] 12345  - 07/11/2026, 10:00:00 AM   LOG [Context] message``
 startup banner style."""
+
 from __future__ import annotations
 
 import os
 from datetime import datetime
-from typing import Optional
 
 from rich.console import Console
 
@@ -26,10 +26,10 @@ class Logger:
 
     app_name = "Austial"
 
-    def __init__(self, context: Optional[str] = None):
+    def __init__(self, context: str | None = None):
         self.context = context or "Austial"
 
-    def _write(self, level: str, message: str, context: Optional[str] = None) -> None:
+    def _write(self, level: str, message: str, context: str | None = None) -> None:
         color = _LEVEL_COLORS.get(level, "white")
         timestamp = datetime.now().strftime("%m/%d/%Y, %I:%M:%S %p")
         ctx = context or self.context
@@ -40,17 +40,17 @@ class Logger:
             f"[yellow][{ctx}][/yellow] {message}"
         )
 
-    def log(self, message: str, context: Optional[str] = None) -> None:
+    def log(self, message: str, context: str | None = None) -> None:
         self._write("LOG", message, context)
 
-    def error(self, message: str, context: Optional[str] = None) -> None:
+    def error(self, message: str, context: str | None = None) -> None:
         self._write("ERROR", message, context)
 
-    def warn(self, message: str, context: Optional[str] = None) -> None:
+    def warn(self, message: str, context: str | None = None) -> None:
         self._write("WARN", message, context)
 
-    def debug(self, message: str, context: Optional[str] = None) -> None:
+    def debug(self, message: str, context: str | None = None) -> None:
         self._write("DEBUG", message, context)
 
-    def verbose(self, message: str, context: Optional[str] = None) -> None:
+    def verbose(self, message: str, context: str | None = None) -> None:
         self._write("VERBOSE", message, context)

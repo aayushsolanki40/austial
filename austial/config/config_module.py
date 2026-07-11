@@ -1,4 +1,5 @@
 """``ConfigModule`` -- mirrors ``@nestjs/config``'s ``ConfigModule.forRoot()``."""
+
 from __future__ import annotations
 
 import os

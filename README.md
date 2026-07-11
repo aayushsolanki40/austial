@@ -80,6 +80,22 @@ uv sync --all-extras
 uv run pytest
 ```
 
+## Linting, type-checking & pre-commit hooks
+
+```bash
+uv run ruff check .           # lint
+uv run ruff format .          # format
+uv run mypy austial src tests # type-check
+
+uv run pre-commit install --hook-type pre-commit --hook-type pre-push
+uv run pre-commit run --all-files   # run every hook once, on demand
+```
+
+Once installed, `git commit` runs formatting/linting/type-checks automatically,
+and `git push` also runs the test suite -- mirroring a typical Nest project's
+husky + lint-staged setup. Projects scaffolded with `austial new` get the same
+`.pre-commit-config.yaml` out of the box.
+
 ## Using the CLI
 
 `austial new` scaffolds a brand-new project exactly like `nest new`:

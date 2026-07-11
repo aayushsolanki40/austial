@@ -1,7 +1,6 @@
 """``AustialFactory`` -- mirrors ``NestFactory``."""
-from __future__ import annotations
 
-from typing import Optional
+from __future__ import annotations
 
 from fastapi import FastAPI
 

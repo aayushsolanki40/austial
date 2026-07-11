@@ -1,10 +1,10 @@
-from typing import Any, Dict
+from typing import Any
 
 from pydantic import BaseModel
 
 
 class HealthResponseDto(BaseModel):
     status: str
-    info: Dict[str, Any] = {}
-    error: Dict[str, Any] = {}
-    details: Dict[str, Any] = {}
+    info: dict[str, Any] = {}
+    error: dict[str, Any] = {}
+    details: dict[str, Any] = {}

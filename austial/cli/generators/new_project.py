@@ -1,9 +1,9 @@
 """``austial new <name>`` -- mirrors ``nest new <name>``."""
+
 from __future__ import annotations
 
 import subprocess
 from pathlib import Path
-from typing import Optional
 
 from austial.cli.generators.base import render, write_file
 from austial.cli.naming import to_kebab_case
@@ -12,8 +12,8 @@ from austial.cli.naming import to_kebab_case
 def create_new_project(
     name: str,
     *,
-    directory: Optional[Path] = None,
-    austial_source_path: Optional[str] = None,
+    directory: Path | None = None,
+    austial_source_path: str | None = None,
     skip_install: bool = False,
     skip_git: bool = False,
 ) -> Path:
@@ -25,6 +25,7 @@ def create_new_project(
     write_file(project_dir / "README.md", render("project/readme.j2", **ctx))
     write_file(project_dir / ".env.example", render("project/env_example.j2", **ctx))
     write_file(project_dir / ".gitignore", render("project/gitignore.j2", **ctx))
+    write_file(project_dir / ".pre-commit-config.yaml", render("project/pre_commit_config.yaml.j2", **ctx))
 
     write_file(project_dir / "src" / "__init__.py", "")
     write_file(project_dir / "src" / "main.py", render("project/main.py.j2", **ctx))
@@ -48,6 +49,14 @@ def create_new_project(
     write_file(project_dir / "tests" / "__init__.py", "")
     write_file(project_dir / "tests" / "unit" / "__init__.py", "")
     write_file(project_dir / "tests" / "e2e" / "__init__.py", "")
+    write_file(
+        project_dir / "tests" / "unit" / "health_service_spec.py",
+        render("project/tests/unit/health_service_spec.py.j2", **ctx),
+    )
+    write_file(
+        project_dir / "tests" / "e2e" / "app_e2e_spec.py",
+        render("project/tests/e2e/app_e2e_spec.py.j2", **ctx),
+    )
 
     if not skip_git:
         subprocess.run(["git", "init", "-q"], cwd=project_dir, check=False)

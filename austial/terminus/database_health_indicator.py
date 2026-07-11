@@ -1,4 +1,5 @@
 """``DatabaseHealthIndicator`` -- mirrors ``@nestjs/terminus``'s ``TypeOrmHealthIndicator``."""
+
 from __future__ import annotations
 
 from typing import Any

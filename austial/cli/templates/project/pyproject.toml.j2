@@ -12,6 +12,9 @@ dev = [
     "pytest>=8.2.0",
     "pytest-asyncio>=0.23.0",
     "httpx>=0.27.0",
+    "ruff>=0.6.0",
+    "mypy>=1.11.0",
+    "pre-commit>=3.7.0",
 ]
 {% if austial_source_path %}
 
@@ -24,3 +27,20 @@ asyncio_mode = "auto"
 testpaths = ["tests"]
 pythonpath = ["."]
 python_files = ["*_spec.py", "test_*.py", "*_test.py"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["B008"]  # function calls in default args (`Body()`, `Query()`, ... -- FastAPI's own idiom)
+
+[tool.ruff.lint.isort]
+known-first-party = ["src"]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+check_untyped_defs = true
+warn_unused_ignores = true

@@ -6,10 +6,12 @@ Nest interceptors wrap an RxJS ``Observable``; Austial has no RxJS, so
 give me its return value". Interceptors can inspect/replace the result, time
 the call, catch+rethrow, etc. -- same capabilities, async/await shaped.
 """
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Awaitable, Callable
+from collections.abc import Awaitable, Callable
+from typing import Any
 
 from austial.common.guards.base import ExecutionContext
 

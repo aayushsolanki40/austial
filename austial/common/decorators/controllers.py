@@ -1,9 +1,11 @@
 """``@Controller()`` and HTTP method decorators -- mirrors ``@nestjs/common``."""
+
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, Optional, TypeVar
+from collections.abc import Callable
+from dataclasses import dataclass
+from typing import TypeVar
 
 from austial.core.metadata import (
     CONTROLLER_METADATA,
@@ -28,7 +30,7 @@ def _to_fastapi_path(path: str) -> str:
 @dataclass
 class ControllerMetadata:
     prefix: str = ""
-    tags: Optional[list] = None
+    tags: list | None = None
 
 
 @dataclass
@@ -37,7 +39,7 @@ class RouteMetadata:
     path: str = ""
 
 
-def Controller(prefix: str = "", *, tags: Optional[list] = None) -> Callable[[T], T]:
+def Controller(prefix: str = "", *, tags: list | None = None) -> Callable[[T], T]:
     """Class decorator: declares a controller and its route prefix.
 
     Example::
@@ -99,7 +101,7 @@ def Header(key: str, value: str) -> Callable:
     Stackable -- multiple ``@Header`` calls accumulate."""
 
     def decorator(fn):
-        headers: Dict[str, str] = dict(getattr(fn, "__austial_metadata__", {}).get(HEADER_METADATA, {}))
+        headers: dict[str, str] = dict(getattr(fn, "__austial_metadata__", {}).get(HEADER_METADATA, {}))
         headers[key] = value
         set_metadata(HEADER_METADATA, headers)(fn)
         return fn

@@ -1,5 +1,3 @@
-from typing import List
-
 from austial import Body, Controller, Delete, Get, Patch, Post
 
 from src.modules.{{ snake_name }}.{{ snake_name }}_service import {{ class_name }}Service
@@ -18,7 +16,7 @@ class {{ class_name }}Controller:
         return self.service.create(dto)
 
     @Get()
-    async def find_all(self) -> List[{{ class_name }}]:
+    async def find_all(self) -> list[{{ class_name }}]:
         return self.service.find_all()
 
     @Get(":id")

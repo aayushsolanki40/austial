@@ -1,7 +1,5 @@
-from typing import Optional
-
 from pydantic import BaseModel
 
 
 class Update{{ class_name }}Dto(BaseModel):
-    name: Optional[str] = None
+    name: str | None = None

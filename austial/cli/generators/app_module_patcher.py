@@ -6,6 +6,7 @@ Text-based and intentionally conservative: if the file doesn't look like what
 `austial new`/`austial generate` produce, it leaves it alone and tells the
 caller so a manual edit instruction can be printed instead.
 """
+
 from __future__ import annotations
 
 import re
@@ -23,11 +24,28 @@ def register_module(app_module_path: Path, class_name: str, import_line: str) ->
         return False  # already registered, nothing to do
 
     lines = text.splitlines()
-    last_import_idx = 0
-    for i, line in enumerate(lines):
-        if line.startswith("from ") or line.startswith("import "):
-            last_import_idx = i
-    lines.insert(last_import_idx + 1, import_line)
+
+    # Group the new import with its isort "block" (contiguous run of
+    # from/import lines sharing the same top-level package as `import_line`,
+    # e.g. all `from src...` lines) and re-sort that block alphabetically, so
+    # the patched file stays isort-clean instead of just tacking the new line
+    # onto the end of the whole import section.
+    package = import_line.split()[1].split(".")[0]
+    prefixes = (f"from {package}.", f"import {package}.")
+    block_indices = [i for i, line in enumerate(lines) if line.startswith(prefixes)]
+
+    if block_indices:
+        first, last = block_indices[0], block_indices[-1]
+        block = [lines[i] for i in block_indices] + [import_line]
+        block = sorted(set(block))
+        lines[first : last + 1] = block
+    else:
+        last_import_idx = 0
+        for i, line in enumerate(lines):
+            if line.startswith("from ") or line.startswith("import "):
+                last_import_idx = i
+        lines.insert(last_import_idx + 1, import_line)
+
     text = "\n".join(lines) + "\n"
 
     match = _IMPORTS_ARRAY_RE.search(text)

@@ -51,3 +51,18 @@ uv run austial generate resource cats   # module + CRUD controller + service + d
 ```bash
 uv run pytest
 ```
+
+## Linting, type-checking & pre-commit hooks
+
+```bash
+uv run ruff check .      # lint
+uv run ruff format .     # format
+uv run mypy src tests    # type-check
+
+uv run pre-commit install --hook-type pre-commit --hook-type pre-push
+uv run pre-commit run --all-files   # run every hook once, on demand
+```
+
+Once installed, `git commit` runs formatting/linting/type-checks automatically,
+and `git push` also runs the test suite -- mirroring a typical Nest project's
+husky + lint-staged setup.

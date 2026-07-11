@@ -2,14 +2,15 @@
 ``NestFactory.create()``. Wraps a real FastAPI/Starlette app so it's a drop-in
 ASGI target (``uvicorn src.main:app``) *and* offers Nest's programmatic API
 (``app.listen()``, ``app.use_global_pipes()``, ...)."""
+
 from __future__ import annotations
 
-from typing import Any, Optional, Sequence
+from typing import Any
 
 import uvicorn
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import Response
@@ -41,26 +42,26 @@ class AustialApplication:
         self._install_middleware()
 
     # -- Nest-shaped configuration API ------------------------------------------------
-    def use_global_pipes(self, *pipes: Any) -> "AustialApplication":
+    def use_global_pipes(self, *pipes: Any) -> AustialApplication:
         self._global_pipes.extend(pipes)
         return self
 
-    def use_global_guards(self, *guards: Any) -> "AustialApplication":
+    def use_global_guards(self, *guards: Any) -> AustialApplication:
         self._global_guards.extend(guards)
         return self
 
-    def use_global_interceptors(self, *interceptors: Any) -> "AustialApplication":
+    def use_global_interceptors(self, *interceptors: Any) -> AustialApplication:
         self._global_interceptors.extend(interceptors)
         return self
 
-    def use_global_filters(self, *filters: Any) -> "AustialApplication":
+    def use_global_filters(self, *filters: Any) -> AustialApplication:
         self._global_filters.extend(filters)
         return self
 
-    def enable_cors(self, **kwargs: Any) -> "AustialApplication":
+    def enable_cors(self, **kwargs: Any) -> AustialApplication:
         defaults = dict(allow_origins=["*"], allow_methods=["*"], allow_headers=["*"], allow_credentials=True)
         defaults.update(kwargs)
-        self._fastapi_app.add_middleware(CORSMiddleware, **defaults)
+        self._fastapi_app.add_middleware(CORSMiddleware, **defaults)  # type: ignore[arg-type]
         return self
 
     def get(self, token: Any) -> Any:
@@ -74,7 +75,7 @@ class AustialApplication:
         return self._fastapi_app
 
     # -- lifecycle ---------------------------------------------------------------------
-    async def init(self) -> "AustialApplication":
+    async def init(self) -> AustialApplication:
         """Builds routes without starting a server -- mirrors Nest's
         ``await app.init()``, the entry point ``@nestjs/testing`` e2e tests use
         alongside ``request(app.getHttpServer())``."""
@@ -105,7 +106,7 @@ class AustialApplication:
             filters = self._global_filters or [AllExceptionsFilter()]
             return await dispatch_exception(exc, request, filters)
 
-        self._fastapi_app.add_exception_handler(RequestValidationError, handle_validation_error)
+        self._fastapi_app.add_exception_handler(RequestValidationError, handle_validation_error)  # type: ignore[arg-type]
         self._fastapi_app.add_exception_handler(Exception, handle_uncaught)
 
     def _install_middleware(self) -> None:

@@ -1,10 +1,12 @@
 """``@Injectable()`` and ``@Inject(token)`` -- mirrors ``@nestjs/common``."""
+
 from __future__ import annotations
 
-from typing import Any, Callable, Optional, TypeVar
+from collections.abc import Callable
+from typing import Any, TypeVar
 
 from austial.common.enums import Scope
-from austial.core.metadata import INJECTABLE_METADATA, INJECT_TOKENS_METADATA, set_metadata
+from austial.core.metadata import INJECTABLE_METADATA, set_metadata
 
 T = TypeVar("T")
 
@@ -54,7 +56,7 @@ class InjectMarker:
         return f"InjectMarker({self.token!r})"
 
 
-def Optional_() -> "OptionalMarker":  # noqa: N802 - mirrors Nest's @Optional()
+def Optional_() -> OptionalMarker:  # noqa: N802 - mirrors Nest's @Optional()
     return OptionalMarker()
 
 

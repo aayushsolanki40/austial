@@ -1,5 +1,4 @@
 from austial import Controller, Get, UseGuards
-
 from src.modules.health.guards.api_key_guard import ApiKeyGuard
 from src.modules.health.health_dto import HealthResponseDto
 from src.modules.health.health_service import HealthService

@@ -1,7 +1,4 @@
-from typing import List
-
 from austial import Body, Controller, Delete, Get, Patch, Post
-
 from src.modules.cats.cats_service import CatsService
 from src.modules.cats.dto.create_cats_dto import CreateCatsDto
 from src.modules.cats.dto.update_cats_dto import UpdateCatsDto
@@ -18,7 +15,7 @@ class CatsController:
         return self.service.create(dto)
 
     @Get()
-    async def find_all(self) -> List[Cats]:
+    async def find_all(self) -> list[Cats]:
         return self.service.find_all()
 
     @Get(":id")

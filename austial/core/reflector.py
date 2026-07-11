@@ -1,7 +1,9 @@
 """Reflector: the public, Nest-shaped API for reading decorator metadata back out."""
+
 from __future__ import annotations
 
-from typing import Any, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from austial.core.metadata import get_metadata
 

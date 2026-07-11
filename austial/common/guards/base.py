@@ -1,8 +1,9 @@
 """``CanActivate`` + ``ExecutionContext`` -- mirrors ``@nestjs/common``."""
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Optional
+from typing import Any
 
 from starlette.requests import Request
 
@@ -17,7 +18,7 @@ class ExecutionContext:
         self._controller_class = controller_class
         self._handler = handler
 
-    def switch_to_http(self) -> "ExecutionContext":
+    def switch_to_http(self) -> ExecutionContext:
         return self
 
     def get_request(self) -> Request:

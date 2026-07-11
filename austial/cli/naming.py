@@ -2,6 +2,7 @@
 (``cats``, ``cat-breed``, ``CatBreed``, ``cat_breed``) into the forms needed
 for file names, class names and route prefixes, mirroring how ``nest g``
 normalizes its ``<name>`` argument."""
+
 from __future__ import annotations
 
 import re

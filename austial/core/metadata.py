@@ -6,6 +6,7 @@ Every decorator in Austial (``@Module``, ``@Controller``, ``@Get``, ``@UseGuards
 decorated class or function. :class:`Reflector` (see ``reflector.py``) is the
 public, Nest-shaped API for reading it back out.
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -61,4 +62,4 @@ def get_metadata(key: str, target: Any, default: Any = None) -> Any:
 
 def has_metadata(key: str, target: Any) -> bool:
     bucket = getattr(target, _METADATA_ATTR, None)
-    return bool(bucket) and key in bucket
+    return bucket is not None and key in bucket

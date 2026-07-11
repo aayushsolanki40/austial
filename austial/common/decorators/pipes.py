@@ -1,7 +1,9 @@
 """``@UsePipes()`` -- mirrors ``@nestjs/common``."""
+
 from __future__ import annotations
 
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 from austial.core.metadata import PIPES_METADATA, get_metadata, set_metadata
 

@@ -3,9 +3,11 @@
 Backed by SQLAlchemy's async engine; defaults to a local sqlite file so a
 freshly generated project works with zero external services.
 """
+
 from __future__ import annotations
 
-from typing import Any, Callable, Sequence
+from collections.abc import Callable, Sequence
+from typing import Any
 
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 

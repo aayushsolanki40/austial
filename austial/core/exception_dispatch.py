@@ -2,9 +2,10 @@
 inside route handlers (:mod:`austial.core.router_builder`) and as the
 application-level fallback for errors FastAPI itself raises before a route
 handler ever runs (e.g. request validation failures)."""
+
 from __future__ import annotations
 
-from typing import Sequence
+from collections.abc import Sequence
 
 from starlette.requests import Request
 from starlette.responses import Response

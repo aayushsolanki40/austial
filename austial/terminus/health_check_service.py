@@ -7,9 +7,10 @@ Usage, identical in shape to real Nest/Terminus code::
         lambda: self.database.ping_check("database"),
     ])
 """
+
 from __future__ import annotations
 
-from typing import Awaitable, Callable, List
+from collections.abc import Awaitable, Callable
 
 from austial.common.decorators.injectable import Injectable
 from austial.terminus.health_indicator import HealthCheckError, HealthIndicatorResult
@@ -19,7 +20,7 @@ HealthIndicatorFunction = Callable[[], Awaitable[HealthIndicatorResult]]
 
 @Injectable()
 class HealthCheckService:
-    async def check(self, indicators: List[HealthIndicatorFunction]) -> dict:
+    async def check(self, indicators: list[HealthIndicatorFunction]) -> dict:
         info: HealthIndicatorResult = {}
         error: HealthIndicatorResult = {}
         details: HealthIndicatorResult = {}

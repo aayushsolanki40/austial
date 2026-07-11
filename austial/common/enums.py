@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import StrEnum
 
 
-class Scope(str, Enum):
+class Scope(StrEnum):
     """Provider scope, mirrors ``@nestjs/common``'s ``Scope``.
 
     Only ``DEFAULT`` (singleton, one instance per application) and

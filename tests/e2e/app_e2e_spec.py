@@ -2,13 +2,13 @@
 (in-process) app via ``austial.testing`` + ``httpx``'s ASGI transport, and hit
 routes exactly like a client would, no mocking of the HTTP layer at all.
 """
+
 from __future__ import annotations
 
 import pytest
 from httpx import ASGITransport, AsyncClient
 
 from austial.testing import Test
-
 from src.app_controller import AppController
 from src.app_service import AppService
 from src.modules.cats.cats_module import CatsModule

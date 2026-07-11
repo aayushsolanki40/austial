@@ -1,7 +1,4 @@
-from typing import List
-
 from austial import Injectable, NotFoundException
-
 from src.modules.cats.dto.create_cats_dto import CreateCatsDto
 from src.modules.cats.dto.update_cats_dto import UpdateCatsDto
 from src.modules.cats.entities.cats_entity import Cats
@@ -13,7 +10,7 @@ class CatsService:
     ``austial.database`` (SQLAlchemy) whenever you're ready."""
 
     def __init__(self):
-        self._items: List[Cats] = []
+        self._items: list[Cats] = []
         self._next_id = 1
 
     def create(self, dto: CreateCatsDto) -> Cats:
@@ -22,7 +19,7 @@ class CatsService:
         self._items.append(item)
         return item
 
-    def find_all(self) -> List[Cats]:
+    def find_all(self) -> list[Cats]:
         return self._items
 
     def find_one(self, id: int) -> Cats:
