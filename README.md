@@ -1,9 +1,13 @@
 <p align="center">
-  <img src="assets/icon.svg" alt="Austial icon" width="96">
+  <img src="assets/icon.svg" alt="Austial icon" width="56">
 </p>
 
 <p align="center">
-  <img src="assets/logo.svg" alt="Austial" width="420">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/logo.svg">
+    <img src="assets/logo.svg" alt="Austial" width="220">
+  </picture>
 </p>
 
 <p align="center">
@@ -154,7 +158,7 @@ hand-written, it's proof the generator works.
 api.austial.com/
 ├── pyproject.toml          # package "austial", console-script entry point
 ├── LICENSE                  # MIT
-├── assets/                   # logo.svg / icon.svg / apple-icon.png (used in this README)
+├── assets/                   # logo.svg (+ logo-dark.svg for dark mode) / icon.svg / apple-icon.png
 ├── austial/                 # the framework (installable library)
 │   ├── common/               # decorators, guards, interceptors, pipes, filters,
 │   │                         # middleware, exceptions, logger
