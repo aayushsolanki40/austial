@@ -1,0 +1,53 @@
+# {{ project_name }}
+
+Generated with the [Austial](https://github.com/) CLI -- a NestJS-style, batteries-included
+web framework for Python, built on FastAPI.
+
+## Project structure
+
+```
+src/
+├── main.py                 # entry point (mirrors Nest's main.ts)
+├── app_module.py            # root module (mirrors app.module.ts)
+├── app_controller.py
+├── app_service.py
+└── modules/
+    └── health/               # GET /health, GET /health/protected
+tests/
+├── unit/
+└── e2e/
+```
+
+> Note: Python can't import filenames containing dots the way Node resolves
+> `health.controller.ts`, so Austial uses `health_controller.py` /
+> `health_service.py` / `health_module.py` instead -- same one-folder-per-feature
+> layout as Nest, just underscore-suffixed file names.
+
+## Running it
+
+```bash
+uv sync
+cp .env.example .env
+uv run austial serve          # http://localhost:8000, auto-reload
+# or
+uv run python -m src.main
+```
+
+- `GET /health` -> terminus-style health check
+- `GET /health/protected` -> requires `x-api-key: <API_KEY from .env>`
+- `GET /docs` -> Swagger UI (free from FastAPI)
+
+## Generating more artifacts
+
+```bash
+uv run austial generate module cats
+uv run austial generate controller cats
+uv run austial generate service cats
+uv run austial generate resource cats   # module + CRUD controller + service + dto
+```
+
+## Tests
+
+```bash
+uv run pytest
+```

@@ -1,6 +1,7 @@
 """``@Controller()`` and HTTP method decorators -- mirrors ``@nestjs/common``."""
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, Optional, TypeVar
 
@@ -13,6 +14,15 @@ from austial.core.metadata import (
 )
 
 T = TypeVar("T")
+
+_EXPRESS_PARAM_RE = re.compile(r":([A-Za-z_][A-Za-z0-9_]*)")
+
+
+def _to_fastapi_path(path: str) -> str:
+    """Translates Nest/Express-style ``:id`` path params into FastAPI/Starlette's
+    ``{id}`` syntax, so route paths can be written exactly like in Nest, e.g.
+    ``@Get(":id")`` or ``@Get("users/:id/posts/:postId")``."""
+    return _EXPRESS_PARAM_RE.sub(r"{\1}", path)
 
 
 @dataclass
@@ -52,6 +62,7 @@ def Controller(prefix: str = "", *, tags: Optional[list] = None) -> Callable[[T]
 
 def _route_decorator(method: str):
     def factory(path: str = "") -> Callable:
+        path = _to_fastapi_path(path)
         normalized = "/" + path.strip("/") if path else ""
 
         def decorator(fn):

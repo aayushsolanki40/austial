@@ -40,6 +40,7 @@ packages = ["austial"]
 asyncio_mode = "auto"
 testpaths = ["tests"]
 pythonpath = ["."]
+python_files = ["*_spec.py", "test_*.py", "*_test.py"]
 
 [tool.uv]
 package = true

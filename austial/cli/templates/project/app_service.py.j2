@@ -1,0 +1,7 @@
+from austial import Injectable
+
+
+@Injectable()
+class AppService:
+    def get_hello(self) -> dict:
+        return {"message": "Hello from {{ project_name }}, built with Austial!"}
